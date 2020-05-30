@@ -1,7 +1,12 @@
 import React from 'react';
+import './App.css';
+import 'antd/dist/antd.css';
+import ReactDOM from 'react-dom';
+import { PDFViewer } from '@react-pdf/renderer';
+
 import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 
-// Create styles
+
 const styles = StyleSheet.create({
   page: {
     flexDirection: 'row',
@@ -15,26 +20,48 @@ const styles = StyleSheet.create({
 });
 
 
-var data=[];
-for (var i = 0; i <9; i++) {
-data.push(<Text>hola</Text>);
+export default class MyDocument   extends React.Component {
+ constructor(props) {
+    super(props);
+
+    this.state = {
+    collapsed: false,
+    modalNuevo: false,
+    adminvisible: true
+   };
+
+ }
+
+
+ componentDidMount()
+{
+
+console.log("prueba");
+
+
 
 }
 
 
 
-// Create Document Component
- const MyDocument = () => (
+  render() {
+
+var v=this.props.data;
+
+console.log(v);
+
+
+    return (
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
       <Text>Clientes</Text>
-       {data}
+  <Text>{v[0]}</Text>
       </View>
    
     </Page>
   </Document>
-);
 
-
- export default MyDocument;
+    );
+  }
+}

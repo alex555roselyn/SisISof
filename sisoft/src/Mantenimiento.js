@@ -425,6 +425,8 @@ const {precio}= this.state;
 
 	return(
 		<>
+
+        <Button onClick={this.send}>enviar</Button>
 <Modal visible={this.state.modalNuevo} okText="Crear" width={900} cancelText="Cancelar" onCancel={this.cerrarModalCrear} onOk={this.Okconfirm}>
 <p><Input  value={value} onChange={this.onChanges} placeholder="Nombre del Producto"/></p>
 

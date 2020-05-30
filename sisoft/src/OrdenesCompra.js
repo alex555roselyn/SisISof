@@ -3,7 +3,7 @@ import TablaCatalogo from './TablaCatalogo.js';
 import datas from './data.js';
 import axios from 'axios';
 import ds from './Imagenes.js';
-import { Tag } from 'antd';
+import { Tag, Select } from 'antd';
 import imagen1 from './Images/imagen1.png';
 import imagen2 from './Images/imagen2.png';
 import imagen3 from './Images/imagen3.png';
@@ -79,6 +79,9 @@ import { Table, Input, Button ,Modal, Col, Row} from 'antd';
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined,PushpinFilled,ShoppingCartOutlined} from '@ant-design/icons';
 import Navbar from 'react-bootstrap/Navbar'
+import { PDFViewer } from '@react-pdf/renderer';
+import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+
 
 const ar=["imagen0",imagen1, imagen2, imagen3, imagen4, imagen5, imagen6, imagen7, imagen8, imagen9,
  imagen10, "imagen11", "imagen12", imagen13, imagen14, imagen15, imagen16, imagen17, imagen18,
@@ -88,7 +91,7 @@ const ar=["imagen0",imagen1, imagen2, imagen3, imagen4, imagen5, imagen6, imagen
      "imagen49", imagen50, imagen51, imagen52, imagen53, imagen54, imagen55, imagen56, imagen57, imagen58,
       imagen59, "imagen60", imagen61, imagen62, imagen63, imagen64, imagen65, imagen66, imagen67, imagen68, imagen69,imagen70];
 
-
+const { Option } = Select;
 
 
 
@@ -104,6 +107,26 @@ var tab2=[];
 var orden=[];
 var precios=[];
 var suma=0;
+var dataClientes=[];
+
+const children = [];
+
+const styles = StyleSheet.create({
+  page: {
+    flexDirection: 'row',
+    backgroundColor: '#E4E4E4'
+  },
+  section: {
+    margin: 15,
+    padding: 10,
+    flexGrow: 20
+  }
+});
+
+
+
+var datapdf=[];
+
 
 
 export default class OrdenesCompra extends React.Component {
@@ -121,7 +144,17 @@ export default class OrdenesCompra extends React.Component {
     total:null,
     tab2:[],
     visiblebutton:true,
-    cantidad:null
+    cantidad:null,
+    modalVenta:false,
+    dataClient:[],
+    modalFactura:false,
+    env:null,
+    n:'',
+    c:'',
+    t:null,
+    cliet:'',
+    desc: null
+
     };
     this.llenarGridData=this.llenarGridData.bind(this);
     this.send=this.send.bind(this);
@@ -130,6 +163,15 @@ export default class OrdenesCompra extends React.Component {
               this.cerrarModalCrear=this.cerrarModalCrear.bind(this);
               this.Okconfirm=this.Okconfirm.bind(this);
               this.getOrder=this.getOrder.bind(this);
+              this.getventa=this.getventa.bind(this);
+              this.sendVenta=this.sendVenta.bind(this);
+              this.showVenta=this.showVenta.bind(this);
+              this.cerrarModalVenta=this.cerrarModalVenta.bind(this);
+              this.handleChange=this.handleChange.bind(this);
+              this.getClients=this.getClients.bind(this);
+              this.showFactura=this.showFactura.bind(this);
+              this.cerrarshowFactura=this.cerrarshowFactura.bind(this);
+              this.OkFactura=this.OkFactura.bind(this);
 
 }
   
@@ -138,9 +180,279 @@ export default class OrdenesCompra extends React.Component {
 
 
 
+getClients()
+{
 
 
 
+
+
+
+
+  axios.get('http://34.68.215.244:9200/clientes/_doc/_search?scroll=10m&size=1000',{
+      headers: {
+        //'Authorization': 'Bearer ' + Cookies("token")
+        //'Authorization' : 'Basic ZWxhc3RpYzpZcDlFaU9PVDZjOWY2V2lqMVlWNUlaMmI='
+      }
+    })
+      .then(res => {
+        this.setState({
+           dataClient: res.data.hits.hits
+
+        });
+
+        //console.log(res.data.hits);
+
+const {dataClient}=this.state;
+console.log(dataClient);
+
+
+
+
+
+for (var i = 0; i < dataClient.length; i++) {
+
+//console.log(datagrid[i]._source.message);
+//datagrid[i]._source.nombre_imagen,
+
+
+
+var ex=dataClient[i]._id;
+
+
+
+var estado=dataClient[i]._source.estado;
+
+var t=dataClient[i]._source.tipo;
+var t1;
+var descuento;
+
+if(t==1)
+{
+t1="Cliente Frecuente";
+descuento=0.10;
+}
+
+if(t==2)
+{
+t1="Cliente Credito";
+descuento=0.08;
+}
+
+if(t==3)
+{
+t1="Cliente Contado";
+descuento=0.15;
+}
+
+dataClientes.push({
+  "key": dataClient[i]._id,
+  "nombre":dataClient[i]._source.nombre,
+  "apellido":dataClient[i]._source.apellido,
+  "estado": estado,
+  "telefono":dataClient[i]._source.telefono,
+  "email": dataClient[i]._source.correo,
+  "tipo": t1,
+  "descuento": descuento
+  
+});
+
+
+var sz=""+i;
+
+
+
+
+if(estado==1)
+{
+  children.push(<Option key={sz}>{dataClient[i]._source.nombre} {dataClient[i]._source.apellido}</Option>);
+}
+
+
+if(estado==0)
+{
+  console.log("inactivo");
+}
+
+
+
+}
+      })
+
+
+
+}
+
+
+
+
+
+handleChange(value) {
+  console.log(`selected ${value}`);
+
+
+
+var i=parseInt(value);
+
+console.log(dataClientes[i]);
+
+
+if(!(value==''|| value==undefined || value==[]))
+{
+document.getElementById('Input1').value=dataClientes[i].email;//correo
+
+document.getElementById('Input2').value=dataClientes[i].nombre;//nombre
+
+document.getElementById('Input3').value=dataClientes[i].apellido;//apellido
+
+document.getElementById('Input4').value=dataClientes[i].telefono;//telefono
+
+document.getElementById('Input5').value=dataClientes[i].tipo;//telefono
+
+document.getElementById('Input6').value=dataClientes[i].descuento;//telefono
+
+}
+}
+
+
+         getventa()
+         {
+
+         }
+
+
+sendVenta()
+{
+
+  var envio=[];
+
+
+const {tab2}=this.state;
+
+
+
+for (var i = 0; i < tab2.length; i++) {
+
+
+envio.push({
+  "key":  tab2[i].key,
+  "name": tab2[i].name,
+  "precio": tab2[i].precio
+})
+
+}
+
+
+var a=document.getElementById('Input1').value;
+
+var b=document.getElementById('Input2').value;
+
+var c=document.getElementById('Input3').value;
+
+var d=document.getElementById('Input4').value;
+
+var e=document.getElementById('Input5').value;
+
+var f=document.getElementById('Input6').value;
+
+
+var to=this.state.total;
+var porcent=to*f;
+var neto=to-porcent;
+
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+var raw = JSON.stringify({"correo": a,"nombre": b,"apellido": c,"telefono": d,"tipo": e,"descuento": f, "productos": envio, "subtotal": neto, "estado": 1});
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("http://34.68.215.244:9200/ordenes/_doc/", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+
+  this.setState({modalVenta: false});
+
+document.getElementById('Input1').value="";//correo
+
+document.getElementById('Input2').value="";//nombre
+
+document.getElementById('Input3').value="";//apellido
+
+document.getElementById('Input4').value="";//telefono
+
+document.getElementById('Input5').value="";//tipo
+
+document.getElementById('Input6').value=null;//descuento
+
+this.showFactura(a,b,c,d,e,f,envio,neto);
+
+
+}
+
+showFactura(correo,nombre,apellido,telefono,tipo,descuento,productos,total)
+{
+
+
+
+
+  for (var i = 0; i <productos.length; i++) {
+datapdf.push(<Text>{productos[i].name}...{productos[i].precio}</Text>);
+
+}
+
+
+var l=nombre+" "+apellido;
+
+this.setState({ modalFactura: true, env: total, n: l, c: correo, t: telefono, cliet: tipo, desc: descuento});
+
+
+
+}
+cerrarshowFactura()
+{
+  this.setState({ modalFactura: false});
+}
+OkFactura()
+{
+  
+}
+
+
+
+
+showVenta()
+{
+  this.setState({modalVenta: true});
+}                   
+
+
+
+
+cerrarModalVenta()
+{
+  this.setState({modalVenta: false});
+
+document.getElementById('Input1').value="";//correo
+
+document.getElementById('Input2').value="";//nombre
+
+document.getElementById('Input3').value="";//apellido
+
+document.getElementById('Input4').value="";//telefono
+
+document.getElementById('Input5').value="";//tipo
+
+document.getElementById('Input6').value=null;//descuento
+
+
+}
 
 
 
@@ -570,7 +882,7 @@ this.llenarGridData();
 
 
 componentDidMount()
-{
+{this.getClients();
 	for (var i = 0; i < 2; i++) {
 	this.llenarGridData();
 	}
@@ -639,6 +951,12 @@ const { loading, selectedRowKeys } = this.state;
    
     ];
 
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+var yyyy = today.getFullYear();
+
+today = mm + '/' + dd + '/' + yyyy;
 
 
 
@@ -652,7 +970,7 @@ const { loading, selectedRowKeys } = this.state;
 
 	</Col>
 <Col offset={5} span={2}>
-<Button hidden={this.state.visiblebutton} className="rounded-pill text-info">Generar Orden de Compra-></Button></Col>
+<Button hidden={this.state.visiblebutton} onClick={this.showVenta} className="rounded-pill text-info">Generar Orden de Compra-></Button></Col>
 <Col offset={20} span={4}><span>
 Total <ShoppingCartOutlined /><sup>{this.state.cantidad}</sup>
      <Navbar bg="secondary" variant="dark" fixed="button" className="rounded-sm"><u> Q.{this.state.total}</u></Navbar></span>
@@ -674,6 +992,88 @@ Total <ShoppingCartOutlined /><sup>{this.state.cantidad}</sup>
 	<Table rowSelection={rowSelection}  columns={columns} dataSource={this.state.tables} />
 </Modal>
 	
+
+
+<Modal visible={this.state.modalVenta} okText="Guardar" width={900} cancelText="Cerrar" onCancel={this.cerrarModalVenta} onOk={this.sendVenta}>
+
+
+<form>
+
+<Select mode="tags" style={{ width: '100%' }} placeholder="Seleccione un Cliente" onChange={this.handleChange} tokenSeparators={[',']}>
+    {children}
+  </Select>
+
+  <div className="form-group">
+    <label>Correo Electrónico</label>
+    <input type="email" className="form-control" id="Input1" placeholder="name@example.com"/>
+      <label>Nombre</label>
+     <input type="email" className="form-control" id="Input2" placeholder="" required/>
+           <label>Apellido</label>
+     <input type="email" className="form-control" id="Input3" placeholder="" required/>
+  </div>
+
+<div className="form-group">
+    <label >Teléfono</label>
+    <input type="number" className="form-control" id="Input4" placeholder="12345678"/>
+      <label >Tipo de Cliente</label>
+    <input type="text" className="form-control" id="Input5"/>
+      <label >Descuento</label>
+    <input type="number" className="form-control" id="Input6"/>
+  </div>
+</form>
+
+
+</Modal>
+
+
+<Modal visible={this.state.modalFactura} okText="Guardar" width={900} cancelText="Cerrar" onCancel={this.cerrarshowFactura} onOk={this.OkFactura}>
+  <PDFViewer width={900} height={700}>
+<Document title="Factura Contable">
+    <Page size="A4" style={styles.page}>
+
+ <View style={{
+   color: 'black', margin: 30 
+    }
+  }>  
+
+
+  <Text style={{textAlign: 'center'}}>Spring Cleaning inc.</Text>
+     <Text style={{textAlign: 'center'}}>Factura Contable</Text>
+        <Text style={{textAlign: 'center'}}>Nit: 3020112-1</Text>
+          <Text style={{textAlign: 'center'}}>Sugeto a Pagos Trimestrales</Text>
+      <View style={styles.section}>
+
+      <Text style={{textAlign: 'center'}}>Fecha: {today}</Text>
+      <Text>Productos</Text>
+           <Text>___________________________________________________</Text>
+       {datapdf}
+            <Text>___________________________________________________</Text>
+           <Text>Total: Q.{this.state.env}</Text>
+              <Text>___________________________________________________</Text>
+            <Text style={{textAlign: 'center'}}>Datos Cliente</Text>
+
+                 <Text>Nombre: {this.state.n}</Text>
+                      <Text>Correo Electrónico: {this.state.c}</Text>
+                            <Text>Telefono: {this.state.t}</Text>
+                                    <Text>Tipo de Cliente: {this.state.cliet}</Text>
+                                              <Text>Porcentaje de Descuento: {this.state.desc}%</Text>
+
+   <Text>___________________________________________________</Text>
+           
+
+
+
+
+      </View>
+       
+ 
+      
+
+   </View>
+    </Page>
+  </Document>
+  </PDFViewer>
+</Modal>
 
 	
 </>

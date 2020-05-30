@@ -9,13 +9,12 @@ export default class Dashboard extends React.Component {
     return (
       <>
      <Jumbotron>
-  <h1>Hello, world!</h1>
+  <h1>Hola!</h1>
   <p>
-    This is a simple hero unit, a simple jumbotron-style component for calling
-    extra attention to featured content or information.
+    Bienvenido a SISOFT un sistema pensado para usted.
   </p>
   <p>
-    <Button variant="primary">Learn more</Button>
+    <Button variant="primary">Leer Mas</Button>
   </p>
 </Jumbotron>
       </>
