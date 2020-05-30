@@ -1,9 +1,8 @@
 import React from 'react';
 import TablaCatalogo from './TablaCatalogo.js';
-import datas from './data.js';
 import axios from 'axios';
 import ds from './Imagenes.js';
-import { Tag, Button } from 'antd';
+import { Tag} from 'antd';
 import imagen1 from './Images/imagen1.png';
 import imagen2 from './Images/imagen2.png';
 import imagen3 from './Images/imagen3.png';
@@ -139,11 +138,6 @@ async 	send()
 
 
 await sleep(2000);
-
-
-
-var arr=[];
-
 
 
 var myHeaders = new Headers();

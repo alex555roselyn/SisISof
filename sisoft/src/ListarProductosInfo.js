@@ -1,16 +1,14 @@
 import React from 'react';
-import MyDocument from './MyDocument.js';
-import datas from './data.js';
+
+
 import axios from 'axios';
-import ds from './Imagenes.js';
-import { Modal,Button, Tag} from 'antd';
-import RenderPDF from './RenderPDF.js';
+
+import { Modal,Button} from 'antd';
+
 import { PDFViewer } from '@react-pdf/renderer';
 
 import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+
 
 
 
@@ -121,10 +119,6 @@ for (var i = 0; i < datagrid.length; i++) {
 
 //console.log(datagrid[i]._source.message);
 //datagrid[i]._source.nombre_imagen,
-
-
-
-var ex=datagrid[i]._id;
 
 
 

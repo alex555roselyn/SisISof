@@ -1,16 +1,13 @@
 import React from 'react';
-import MyDocument from './MyDocument.js';
-import datas from './data.js';
+
+
 import axios from 'axios';
-import ds from './Imagenes.js';
+
 import { Modal,Button} from 'antd';
-import RenderPDF from './RenderPDF.js';
+
 import { PDFViewer } from '@react-pdf/renderer';
 
 import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 
 
@@ -124,18 +121,17 @@ for (var i = 0; i < datagrid.length; i++) {
 
 
 
-var ex=datagrid[i]._id;
 
 
 
 var estado=datagrid[i]._source.estado;
 var tg;
 
-if(estado==0)
+if(estado===0)
 {
 	tg="Inactivo";
 }
-if(estado==1)
+if(estado===1)
 {
 	tg="Activo";
 }

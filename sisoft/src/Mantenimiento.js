@@ -1,6 +1,6 @@
 import React from 'react';
 import TablaModificar from './TablaModificar.js';
-import datas from './data.js';
+
 import axios from 'axios';
 import ds from './Imagenes.js';
 import { Tag,Button,Modal, Input,Col,Row} from 'antd';
@@ -158,8 +158,6 @@ async 	send()
 await sleep(2000);
 
 
-
-var arr=[];
 
 
 

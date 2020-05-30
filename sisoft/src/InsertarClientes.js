@@ -1,18 +1,12 @@
 import React from 'react';
 
-import axios from 'axios';
-import { Form, Input, Button, Select } from 'antd';
+import { Button} from 'antd';
 
 //import Form 'react-bootstrap/Form'
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-
-
-
-
-var data=[];
 
 
 
@@ -87,8 +81,6 @@ var e=parseInt(document.getElementById('Select1').value);
 await sleep(2000);
 
 
-
-var arr=[];
 
 
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import 'antd/dist/antd.css';
-import ReactDOM from 'react-dom';
+
 import { PDFViewer } from '@react-pdf/renderer';
 import MyDocument from './MyDocument.js';
 

@@ -1,6 +1,5 @@
 import React from 'react';
-import TablaCatalogo from './TablaCatalogo.js';
-import datas from './data.js';
+
 import axios from 'axios';
 import ds from './Imagenes.js';
 import { Tag, Select } from 'antd';
@@ -77,7 +76,7 @@ import imagen70 from './Images/imagen70.png';
 
 import { Table, Input, Button ,Modal, Col, Row} from 'antd';
 import Highlighter from 'react-highlight-words';
-import { SearchOutlined,PushpinFilled,ShoppingCartOutlined} from '@ant-design/icons';
+import { SearchOutlined,ShoppingCartOutlined} from '@ant-design/icons';
 import Navbar from 'react-bootstrap/Navbar'
 import { PDFViewer } from '@react-pdf/renderer';
 import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
@@ -103,7 +102,7 @@ function sleep(ms) {
 
 
 var data=[];
-var tab2=[];
+
 var orden=[];
 var precios=[];
 var suma=0;
@@ -217,9 +216,6 @@ for (var i = 0; i < dataClient.length; i++) {
 
 
 
-var ex=dataClient[i]._id;
-
-
 
 var estado=dataClient[i]._source.estado;
 
@@ -227,19 +223,19 @@ var t=dataClient[i]._source.tipo;
 var t1;
 var descuento;
 
-if(t==1)
+if(t===1)
 {
 t1="Cliente Frecuente";
 descuento=0.10;
 }
 
-if(t==2)
+if(t===2)
 {
 t1="Cliente Credito";
 descuento=0.08;
 }
 
-if(t==3)
+if(t===3)
 {
 t1="Cliente Contado";
 descuento=0.15;
@@ -263,13 +259,13 @@ var sz=""+i;
 
 
 
-if(estado==1)
+if(estado===1)
 {
   children.push(<Option key={sz}>{dataClient[i]._source.nombre} {dataClient[i]._source.apellido}</Option>);
 }
 
 
-if(estado==0)
+if(estado===0)
 {
   console.log("inactivo");
 }
@@ -297,7 +293,7 @@ var i=parseInt(value);
 console.log(dataClientes[i]);
 
 
-if(!(value==''|| value==undefined || value==[]))
+if(!(value===''|| value===undefined || value===[]))
 {
 document.getElementById('Input1').value=dataClientes[i].email;//correo
 
@@ -471,8 +467,6 @@ sleep(2000);
 
 
 
-var arr=[];
-
 
 
 var myHeaders = new Headers();
@@ -530,9 +524,7 @@ for (var i = 0; i < datagrid.length; i++) {
 //datagrid[i]._source.nombre_imagen,
 
 
-const im=[imagen1,imagen2,imagen3];
 
-console.log(im);
 
 var ex=datagrid[i]._source.id;
 
@@ -605,7 +597,7 @@ if(conter>0)
 {
 	this.setState({visiblebutton: false});
 }
-if(conter==0)
+if(conter===0)
 {
 	this.setState({visiblebutton: true});
 }
@@ -613,8 +605,6 @@ if(conter==0)
 
 this.setState({cantidad: conter});
 
-
-const {tab2}=this.state;
 
 
 var xc;
@@ -901,13 +891,12 @@ const datas=this.props.datas;
 console.log(datas);
 
 
-const { loading, selectedRowKeys } = this.state;
+const { selectedRowKeys } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange,
     };
-    const hasSelected = selectedRowKeys.length > 0;
-
+    
 
 
 

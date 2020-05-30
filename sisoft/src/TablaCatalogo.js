@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, Input, Button } from 'antd';
 import Highlighter from 'react-highlight-words';
-import { SearchOutlined,PushpinFilled } from '@ant-design/icons';
+import { SearchOutlined} from '@ant-design/icons';
 
 
 
@@ -123,12 +123,12 @@ const datas=this.props.datas;
 console.log(datas);
 
 
-const { loading, selectedRowKeys } = this.state;
+const { selectedRowKeys } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange,
     };
-    const hasSelected = selectedRowKeys.length > 0;
+
 
 
 

@@ -1,25 +1,17 @@
 import React from 'react';
-import Jumbotron from 'react-bootstrap/Jumbotron';
+
 import  {Button} from 'react-bootstrap';
 
 import axios from 'axios';
 import ds from './Imagenes.js';
-import { Tag, Select } from 'antd';
+import {Select } from 'antd';
 import CsvParse from '@vtex/react-csv-parse'
 
-import { Table, Input,Modal, Col, Row} from 'antd';
-import Highlighter from 'react-highlight-words';
-import { SearchOutlined,PushpinFilled,ShoppingCartOutlined} from '@ant-design/icons';
-import Navbar from 'react-bootstrap/Navbar'
-import { PDFViewer } from '@react-pdf/renderer';
-import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 
 
-var data=[];
-var tab2=[];
-var orden=[];
-var precios=[];
-var suma=0;
+
+
+
 var dataClientes=[];
 
 var children = [];
@@ -130,29 +122,25 @@ for (var i = 0; i < dataClient.length; i++) {
 
 
 
-var ex=dataClient[i]._id;
-
-
-
 var estado=dataClient[i]._source.estado;
 
 var t=dataClient[i]._source.tipo;
 var t1;
 var descuento;
 
-if(t==1)
+if(t===1)
 {
 t1="Cliente Frecuente";
 descuento=0.10;
 }
 
-if(t==2)
+if(t===2)
 {
 t1="Cliente Credito";
 descuento=0.08;
 }
 
-if(t==3)
+if(t===3)
 {
 t1="Cliente Contado";
 descuento=0.15;
@@ -176,13 +164,13 @@ var sz=""+i;
 
 
 
-if(estado==1)
+if(estado===1)
 {
   children.push(<Option key={sz}>{dataClient[i]._source.nombre} {dataClient[i]._source.apellido}</Option>);
 }
 
 
-if(estado==0)
+if(estado===0)
 {
   console.log("inactivo");
 }
@@ -210,7 +198,7 @@ var i=parseInt(value);
 console.log(dataClientes[i]);
 
 
-if(!(value==''|| value==undefined || value==[]))
+if(!(value===''|| value===undefined || value===[]))
 {
 document.getElementById('Input1').value=dataClientes[i].email;//correo
 
@@ -238,14 +226,14 @@ sendVenta()
 {
 
   var envio=[];
-var precios=[];
+
 var suma;
 var ps;
 
 const {data}=this.state;
 
 
-precios=[];
+
 suma=0;
 
 
@@ -393,9 +381,6 @@ async   send()
 
 sleep(2000);
 
-
-
-var arr=[];
 
 
 

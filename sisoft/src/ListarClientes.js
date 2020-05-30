@@ -1,6 +1,6 @@
 import React from 'react';
 import TablaClientes from './TablaClientes.js';
-import datas from './data.js';
+
 import axios from 'axios';
 import ds from './Imagenes.js';
 import { Tag } from 'antd';
@@ -72,7 +72,6 @@ await sleep(2000);
 
 
 
-var arr=[];
 
 
 
@@ -137,18 +136,16 @@ for (var i = 0; i < datagrid.length; i++) {
 
 
 
-var ex=datagrid[i]._id;
-
 
 
 var estado=datagrid[i]._source.estado;
 var tg;
 
-if(estado==0)
+if(estado===0)
 {
 	tg=(<Tag color="red">Inactivo</Tag>);
 }
-if(estado==1)
+if(estado===1)
 {
 	tg=(<Tag color="green">Activo</Tag>);
 }

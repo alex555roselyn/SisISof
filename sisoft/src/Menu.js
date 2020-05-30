@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import 'antd/dist/antd.css';
-import { Layout, Menu, Breadcrumb,Button, Tooltip,Modal,message} from 'antd';
+import { Layout, Menu, Breadcrumb,Button,Modal,message} from 'antd';
 import {
   DesktopOutlined,
   PieChartOutlined,
@@ -23,12 +23,12 @@ import {
 } from '@ant-design/icons';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Dashboard from './Dashboard.js';
-import Meseros from './Home.js';
+
 import Listar from './Listar.js';
 import ListarClientes from './ListarClientes.js';
 import ListarClientesModificar from './ListarClientesModificar.js';
 import Mantenimiento from './Mantenimiento.js';
-import RenderPDF from './RenderPDF.js';
+
 import OrdenesCompra from './OrdenesCompra.js';
 import InsertarClientes from './InsertarClientes.js';
 import App2 from './App2.js';
@@ -87,7 +87,7 @@ admin()
 var a=prompt("Ingrese clave");
 
 
-if(a=="4719")
+if(a==="4719")
 
 {
     message.success('Satisfactorio');

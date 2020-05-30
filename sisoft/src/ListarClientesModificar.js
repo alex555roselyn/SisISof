@@ -1,12 +1,12 @@
 import React from 'react';
 import TablaClientesModificar from './TablaClientesModificar.js';
-import datas from './data.js';
+
 import axios from 'axios';
 import ds from './Imagenes.js';
 import {
 SettingOutlined
 } from '@ant-design/icons';
-import {Tag, Button ,Form, Select,Modal, Input } from 'antd';
+import {Tag, Button , Select,Modal} from 'antd';
 
 
 const { Option, OptGroup } = Select;
@@ -17,7 +17,6 @@ function sleep(ms) {
 
 
 var data=[];
-var seleccion;
 
 export default class ListarClientesModificar extends React.Component {
  constructor(props) {
@@ -115,10 +114,6 @@ this.setState({modalEditar:false});
 
 
 
-for (var v = 0; v < 2; v++) {
-seleccion=undefined;
-
-}
 
 }
 
@@ -141,7 +136,6 @@ try{
 
 this.setState({id_selec: id});
 
-seleccion='';
 
 	await axios.get('http://34.68.215.244:9200/clientes/_doc/'+id,{
 			headers: {
@@ -164,32 +158,34 @@ seleccion='';
 				var client;
 				var st;
 
-if(dato.tipo==1)
+
+
+
+if(dato.tipo===1)
 {
 	client="Cliente Frecuente";
-	seleccion='1';
+
 }
 
-if(dato.tipo==2)
+if(dato.tipo===2)
 {
 	client="Cliente Credito";
 
-	seleccion='2';
 }
 
-if(dato.tipo==3)
+if(dato.tipo===3)
 {
 	client="Cliente Contado";
-	seleccion='3';
+
 }
 
 
-if(dato.estado==1)
+if(dato.estado===1)
 {
 	st="Activo";
 }
 
-if(dato.estado==0)
+if(dato.estado===0)
 {
 	st="Inactivo";
 }
@@ -416,11 +412,6 @@ async 	send()
 await sleep(2000);
 
 
-
-var arr=[];
-
-
-
 var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 
@@ -494,21 +485,15 @@ var tipe=""+datagrid[i]._source.tipo;
 console.log(tipe);
 
 
-var ids="sel"+ex;
-
-
-
-
-
 
 var form=(<h3><SettingOutlined onClick={this.cambiotipo.bind(this,ex)} /></h3>);
 
-if(estado==0)
+if(estado===0)
 {
 	tg=(<Tag color="red">Inactivo</Tag>);
 	opt=(<Button onClick={this.activar.bind(this,ex)}>Activar</Button>);
 }
-if(estado==1)
+if(estado===1)
 {
 	tg=(<Tag color="green">Activo</Tag>);
 		opt=(<Button onClick={this.desactivar.bind(this,ex)}>Desactivar</Button>);

@@ -1,6 +1,6 @@
 import React from 'react';
 import TablaVentas from './TablaVentas.js';
-import datas from './data.js';
+
 import axios from 'axios';
 import ds from './Imagenes.js';
 import { Tag, Button, Modal, Table } from 'antd';
@@ -173,7 +173,7 @@ await sleep(2000);
 
 
 
-var arr=[];
+
 
 
 
@@ -247,13 +247,13 @@ var tg;
 
 var detalle=(<Button className="rounded-pill text-info" data-toggle="tooltip" title="Ver Productos"  onClick={this.view.bind(this, ex)} >Ver</Button>);
 
-if(estado==0)
+if(estado===0)
 {
   tg=(<Tag color="red">Inactivo</Tag>);
 
 
 }
-if(estado==1)
+if(estado===1)
 {
   tg=(<Button className="rounded-pill text-info" data-toggle="tooltip" title="Desactivar el pedido?"   onClick={this.desactivar.bind(this, ex)}   >Desactivar</Button>);
 }
